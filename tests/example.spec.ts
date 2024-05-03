@@ -53,8 +53,8 @@ test.describe('Field "Name"', () => {
       await page.locator('#signupName').fill('тест');
       await page.locator('#signupName').blur();
       await expect(page.getByText('Name is invalid')).toBeVisible();
-      const nameInput = page.locator('#signupEmail');
-      await expect(nameInput).toHaveCSS('border-color', 'rgb(206, 212, 218)');
+      const nameInput = page.locator('#signupName');
+      await expect(nameInput).toHaveCSS('border-color', 'rgb(220, 53, 69)');
     });
 });
 
