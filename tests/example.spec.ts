@@ -53,20 +53,13 @@ test.describe('Field "Name"', () => {
       await page.locator('#signupName').fill('тест');
       await page.locator('#signupName').blur();
       await expect(page.getByText('Name is invalid')).toBeVisible();
-      const textColor = await page.evaluate(() => {
-        const element = document.querySelector('p');
-        const styles = getComputedStyle(element);
-        return styles.color;
-    });
-    expect(textColor).toEqual('rgb(255, 255, 255)');
-
-    // const element = page.locator('.invalid-feedback');
-    // await expect(element).toBeVisible();
+      const nameInput = page.locator('#signupEmail');
+      await expect(nameInput).toHaveCSS('border-color', 'rgb(206, 212, 218)');
     });
 });
 
 test.describe('Field "Last name"', () => {
-  test('Empty field - "Name is required"', async ({ page }) => {
+  test('Empty field - "Last Name is required"', async ({ page }) => {
       await page.goto('/');
       await page.getByText('Sign up').click();
       await page.locator('#signupLastName').focus();
@@ -74,7 +67,7 @@ test.describe('Field "Last name"', () => {
       await expect(page.getByText('Last name required')).toBeVisible();
   });
 
-  test('Wrong data - "Name is invalid"', async ({ page }) => {
+  test('Wrong data - "Last Name is invalid"', async ({ page }) => {
     await page.goto('/');
     await page.getByText('Sign up').click();
     await page.locator('#signupLastName').focus();
@@ -142,7 +135,7 @@ test.describe('Field "Password"', () => {
     await expect(page.getByText('Password required')).toBeVisible();
 });
 
-test('Wrong data - "Email is invalid"', async ({ page }) => {
+test('Password has to be from 8 to 15 characters ', async ({ page }) => {
   await page.goto('/');
   await page.getByText('Sign up').click();
   await page.locator('#signupPassword').focus();
@@ -161,7 +154,7 @@ test.describe('Field "Re-enter password"', () => {
     await expect(page.getByText('Re-enter password required')).toBeVisible();
 });
 
-test('Wrong data - "Email is invalid"', async ({ page }) => {
+test('RePassword has to be from 8 to 15 characters', async ({ page }) => {
   await page.goto('/');
   await page.getByText('Sign up').click();
   await page.locator('#signupRepeatPassword').focus();
@@ -221,7 +214,7 @@ test.describe('User registration verification', () => {
     await page.locator('#signupLastName').focus();
     await page.locator('#signupLastName').fill('Kazban');
     await page.locator('#signupEmail').focus();
-    await page.locator('#signupEmail').fill('kazban8+aqa04@gmail.com');
+    await page.locator('#signupEmail').fill('kazban8+aqa08@gmail.com');
     await page.locator('#signupPassword').focus();
     await page.locator('#signupPassword').fill('Dante12345');
     await page.locator('#signupRepeatPassword').focus();
