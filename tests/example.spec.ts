@@ -46,7 +46,7 @@ test.describe('Field "Name"', () => {
       await expect(page.getByText('Name has to be from 2 to 20 characters long')).toBeVisible();
     });
 
-    test('Border color red', async ({ page }) => {
+    test('Border color red - validation Name', async ({ page }) => {
       await page.goto('/');
       await page.getByText('Sign up').click();
       await page.locator('#signupName').focus();
@@ -104,6 +104,17 @@ test.describe('Field "Last name"', () => {
     await expect(page.getByText('Last name has to be from 2 to 20 characters long')).toBeVisible();
   });
 
+  test('Border color red - validation LastName', async ({ page }) => {
+    await page.goto('/');
+    await page.getByText('Sign up').click();
+    await page.locator('#signupLastName').focus();
+    await page.locator('#signupLastName').fill('тест');
+    await page.locator('#signupLastName').blur();
+    await expect(page.getByText('Last name is invalid')).toBeVisible();
+    const lastnameInput = page.locator('#signupLastName');
+    await expect(lastnameInput).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+  });
+
 });
 
 test.describe('Field "Email"', () => {
@@ -122,6 +133,17 @@ test('Wrong data - "Email is invalid"', async ({ page }) => {
   await page.locator('#signupEmail').fill('viktor@gmail');
   await page.locator('#signupEmail').blur();
   await expect(page.getByText('Email is incorrect')).toBeVisible();
+});
+
+test('Border color red - validation email', async ({ page }) => {
+  await page.goto('/');
+  await page.getByText('Sign up').click();
+  await page.locator('#signupEmail').focus();
+  await page.locator('#signupEmail').fill('viktor@gmail');
+  await page.locator('#signupEmail').blur();
+  await expect(page.getByText('Email is incorrect')).toBeVisible();
+  const emailInput = page.locator('#signupEmail');
+  await expect(emailInput).toHaveCSS('border-color', 'rgb(220, 53, 69)');
 });
 
 });
@@ -143,6 +165,18 @@ test('Password has to be from 8 to 15 characters ', async ({ page }) => {
   await page.locator('#signupPassword').blur();
   await expect(page.getByText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter')).toBeVisible();
 });
+
+test('Border color red - validation password', async ({ page }) => {
+  await page.goto('/');
+  await page.getByText('Sign up').click();
+  await page.locator('#signupPassword').focus();
+  await page.locator('#signupPassword').blur();
+  await expect(page.getByText('Password required')).toBeVisible();
+  const passwordInput = page.locator('#signupPassword');
+  await expect(passwordInput).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+
+});
+
 });
 
 test.describe('Field "Re-enter password"', () => {
@@ -161,6 +195,17 @@ test('RePassword has to be from 8 to 15 characters', async ({ page }) => {
   await page.locator('#signupRepeatPassword').fill('vik');
   await page.locator('#signupRepeatPassword').blur();
   await expect(page.getByText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter')).toBeVisible();
+});
+
+test('Border color red - validation REpassword', async ({ page }) => {
+  await page.goto('/');
+    await page.getByText('Sign up').click();
+    await page.locator('#signupRepeatPassword').focus();
+    await page.locator('#signupRepeatPassword').blur();
+    await expect(page.getByText('Re-enter password required')).toBeVisible();
+  const rePasswordInput = page.locator('#signupRepeatPassword');
+  await expect(rePasswordInput).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+
 });
 
 });
@@ -214,7 +259,7 @@ test.describe('User registration verification', () => {
     await page.locator('#signupLastName').focus();
     await page.locator('#signupLastName').fill('Kazban');
     await page.locator('#signupEmail').focus();
-    await page.locator('#signupEmail').fill('kazban8+aqa08@gmail.com');
+    await page.locator('#signupEmail').fill('kazban8+aqa11@gmail.com');
     await page.locator('#signupPassword').focus();
     await page.locator('#signupPassword').fill('Dante12345');
     await page.locator('#signupRepeatPassword').focus();
