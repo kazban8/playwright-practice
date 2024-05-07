@@ -44,3 +44,45 @@ import { incorrectName, incorrectLastName, incorrectEmail, incorrectPassword, in
             await signUpForm.checkInputBorderColorById('signupName', 'rgb(220, 53, 69)');
           });
       });
+
+      test.describe('Field "Last name - POM"', () => {
+        let signUpForm: SignUpForm;
+
+        test.beforeEach(async ({ page }) => {
+          await page.goto('/');
+          signUpForm = new SignUpForm(page);
+      })
+
+      test('Empty field - "Last Name is required"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFailLastNameEmptyWithCredentials()
+        await expect(signUpForm.errorMessageBox).toHaveText('Last name required');
+      });
+
+      test('Wrong data - "Name is invalid"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFailLastNameWithCredentials(incorrectLastName)
+        await expect(signUpForm.errorMessageBox).toHaveText('Name is invalid');
+
+      });
+
+      test('Wrong length, if < 2 - "Name has to be from 2 to 20 characters long"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerWrongLengthLastName(incorrectLenght)
+        await expect(signUpForm.errorMessageBox).toHaveText('Last name has to be from 2 to 20 characters long');
+      });
+
+      test('Wrong length, if > 2 - "Name has to be from 2 to 20 characters long"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerWrongLengthLastName(incorrectLenghtLong)
+        await expect(signUpForm.errorMessageBox).toHaveText('Last name has to be from 2 to 20 characters long');
+      });
+
+      test('Border color red - validation Name', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFailLastNameEmptyWithCredentials()
+        await expect(signUpForm.errorMessageBox).toHaveText('Last name required');
+        await signUpForm.checkInputBorderColorById('signupLastName', 'rgb(220, 53, 69)');
+      });
+
+    });

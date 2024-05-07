@@ -23,7 +23,8 @@ export class SignUpForm {
 
     constructor(page: Page) {
         this.page = page;
-        this.nameField = page.locator('#signupName')
+        this.nameField = page.locator('#signupName');
+        this.lastnameField = page.locator('#signupLastName');
         this.emailField = page.getByLabel('Email');
         this.passwordField = page.getByLabel('Password');
         this.registerButton = page.locator('button', { hasText: 'Register' });
@@ -68,8 +69,22 @@ export class SignUpForm {
         await expect(input).toHaveCSS('border-color', color);
     }
 
-    
+    async registerFailLastNameEmptyWithCredentials() {
+        await this.lastnameField.focus();
+        await this.lastnameField.blur();
+    }
 
+    async registerFailLastNameWithCredentials(incorrectLastName: string) {
+        await this.lastnameField.focus();
+        await this.lastnameField.fill(incorrectLastName);
+        await this.lastnameField.blur();
+    }
+
+    async registerWrongLengthLastName(incorrectLenght: string){
+        await this.lastnameField.focus();
+        await this.lastnameField.fill(incorrectLenght);
+        await this.lastnameField.blur();
+    }
 
 
 }
