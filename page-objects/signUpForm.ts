@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { SignUpButton } from '../components/signUpButton';
-import { incorrectLenght, incorrectName } from '../test-data/credentials';
+import { incorrectLenght, incorrectName, incorrectPassword, incorrectRePassword } from '../test-data/credentials';
 
 
 export class SignUpForm {
@@ -25,8 +25,9 @@ export class SignUpForm {
         this.page = page;
         this.nameField = page.locator('#signupName');
         this.lastnameField = page.locator('#signupLastName');
-        this.emailField = page.getByLabel('Email');
-        this.passwordField = page.getByLabel('Password');
+        this.emailField = page.locator('#signupEmail');
+        this.passwordField = page.locator('#signupPassword');
+        this.repasswordField = page.locator('#signupRepeatPassword');
         this.registerButton = page.locator('button', { hasText: 'Register' });
         this.errorMessageBox = page.locator('.invalid-feedback');
         this.errorMessageColor = page.locator('.invalid-feedback');
@@ -86,5 +87,38 @@ export class SignUpForm {
         await this.lastnameField.blur();
     }
 
+    async registerFailEmailEmptyWithCredentials() {
+    await this.emailField.focus();
+    await this.emailField.blur();
+    }
+
+    async registerFaiEmailWithCredentials(incorrectEmail: string){
+    await this.emailField.focus();
+    await this.emailField.fill(incorrectEmail);
+    await this.emailField.blur();
+    }
+
+    async registerFailPasswordEmptyWithCredentials() {
+        await this.passwordField.focus();
+        await this.passwordField.blur();
+    }
+
+    async registerFailPasswordWithCredentials() {
+    await this.passwordField.focus();
+    await this.passwordField.fill(incorrectPassword);
+    await this.passwordField.blur();
+    }
+
+
+    async registerFailRePasswordEmptyWithCredentials() {
+        await this.repasswordField.focus();
+        await this.repasswordField.blur();
+    }
+
+    async registerFailRePasswordWithCredentials() {
+    await this.repasswordField.focus();
+    await this.repasswordField.fill(incorrectRePassword);
+    await this.repasswordField.blur();
+    }
 
 }

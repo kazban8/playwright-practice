@@ -59,30 +59,122 @@ import { incorrectName, incorrectLastName, incorrectEmail, incorrectPassword, in
         await expect(signUpForm.errorMessageBox).toHaveText('Last name required');
       });
 
-      test('Wrong data - "Name is invalid"', async ({ page }) => {
+      test('Wrong data - "Last Name is invalid"', async ({ page }) => {
         await signUpForm.open();
         await signUpForm.registerFailLastNameWithCredentials(incorrectLastName)
         await expect(signUpForm.errorMessageBox).toHaveText('Name is invalid');
 
       });
 
-      test('Wrong length, if < 2 - "Name has to be from 2 to 20 characters long"', async ({ page }) => {
+      test('Wrong length, if < 2 - "Last Name has to be from 2 to 20 characters long"', async ({ page }) => {
         await signUpForm.open();
         await signUpForm.registerWrongLengthLastName(incorrectLenght)
         await expect(signUpForm.errorMessageBox).toHaveText('Last name has to be from 2 to 20 characters long');
       });
 
-      test('Wrong length, if > 2 - "Name has to be from 2 to 20 characters long"', async ({ page }) => {
+      test('Wrong length, if > 2 - "Last Name has to be from 2 to 20 characters long"', async ({ page }) => {
         await signUpForm.open();
         await signUpForm.registerWrongLengthLastName(incorrectLenghtLong)
         await expect(signUpForm.errorMessageBox).toHaveText('Last name has to be from 2 to 20 characters long');
       });
 
-      test('Border color red - validation Name', async ({ page }) => {
+      test('Border color red - validation Last Name', async ({ page }) => {
         await signUpForm.open();
         await signUpForm.registerFailLastNameEmptyWithCredentials()
         await expect(signUpForm.errorMessageBox).toHaveText('Last name required');
         await signUpForm.checkInputBorderColorById('signupLastName', 'rgb(220, 53, 69)');
       });
 
-    });
+});
+      
+test.describe('Field "Email - POM"', () => {
+        let signUpForm: SignUpForm;
+
+        test.beforeEach(async ({ page }) => {
+          await page.goto('/');
+          signUpForm = new SignUpForm(page);
+      })
+
+    test('Empty field - "signupEmail is required"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFailEmailEmptyWithCredentials()
+        await expect(signUpForm.errorMessageBox).toHaveText('Email required');
+     });
+
+    test('Wrong data - "Email is incorrect"', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFaiEmailWithCredentials(incorrectEmail)
+        await expect(signUpForm.errorMessageBox).toHaveText('Email is incorrect');
+
+      });
+
+    test('Border color red - validation email', async ({ page }) => {
+        await signUpForm.open();
+        await signUpForm.registerFailEmailEmptyWithCredentials()
+        await expect(signUpForm.errorMessageBox).toHaveText('Email required');
+        await signUpForm.checkInputBorderColorById('signupEmail', 'rgb(220, 53, 69)');
+     });
+});
+
+test.describe('Field "Password" - POM"', () => {
+    let signUpForm: SignUpForm;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/');
+      signUpForm = new SignUpForm(page);
+  })
+
+  test('For empty field error - "Password required"', async ({ page }) => {
+    await signUpForm.open();
+    await signUpForm.registerFailPasswordEmptyWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Password required');
+});
+
+ test('Password has to be from 8 to 15 characters ', async ({ page }) => {
+
+    await signUpForm.open();
+    await signUpForm.registerFailPasswordWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
+});
+
+test('Border color red - validation password', async ({ page }) => {
+    await signUpForm.open();
+    await signUpForm.registerFailPasswordEmptyWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Password required');
+    await signUpForm.checkInputBorderColorById('signupPassword', 'rgb(220, 53, 69)');
+ });
+
+});
+
+test.describe('Field "Re-enter password" - POM', () => {
+    let signUpForm: SignUpForm;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/');
+      signUpForm = new SignUpForm(page);
+  })
+
+  test('For empty field error - "RePassword required"', async ({ page }) => {
+    await signUpForm.open();
+    await signUpForm.registerFailRePasswordEmptyWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Re-enter password required');
+});
+
+ test('RePassword has to be from 8 to 15 characters ', async ({ page }) => {
+
+    await signUpForm.open();
+    await signUpForm.registerFailRePasswordWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Password has to be from 8 to 15 characters long and contain at least one integer, one capital, and one small letter');
+});
+
+test('Border color red - validation Re-password', async ({ page }) => {
+    await signUpForm.open();
+    await signUpForm.registerFailRePasswordEmptyWithCredentials();
+    await expect(signUpForm.errorMessageBox).toHaveText('Re-enter password required');
+    await signUpForm.checkInputBorderColorById('signupRepeatPassword', 'rgb(220, 53, 69)');
+
+
+
+});
+
+});
