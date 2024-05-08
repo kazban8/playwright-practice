@@ -10,9 +10,11 @@ export class SignUpForm {
     readonly lastnameField: Locator;
     readonly passwordField: Locator;
     readonly repasswordField: Locator;
-    readonly registerButton: Locator;
+    // readonly registerButton: Locator;
+    readonly registerButtonDisable: Locator;
     readonly errorMessageBox: Locator;
     readonly errorMessageColor: Locator;
+
     // readonly errorMessageName: Locator;
     // readonly errorMessageNameLenght: Locator;
     // readonly errorMessageLastName: Locator;
@@ -28,9 +30,10 @@ export class SignUpForm {
         this.emailField = page.locator('#signupEmail');
         this.passwordField = page.locator('#signupPassword');
         this.repasswordField = page.locator('#signupRepeatPassword');
-        this.registerButton = page.locator('button', { hasText: 'Register' });
+        // this.registerButton = page.locator('button', { hasText: 'Register' });
         this.errorMessageBox = page.locator('.invalid-feedback');
         this.errorMessageColor = page.locator('.invalid-feedback');
+        this.registerButtonDisable = page.getByRole('button', { name: 'Register'});
         this.formHeader = page.getByText('Sign up');
     }
 
@@ -120,5 +123,11 @@ export class SignUpForm {
     await this.repasswordField.fill(incorrectRePassword);
     await this.repasswordField.blur();
     }
+
+    async isRegisterButtonDisabled(): Promise<boolean> {
+        const registerButtonDisable = await this.registerButtonDisable;
+        return await registerButtonDisable.isDisabled();
+    }
+
 
 }

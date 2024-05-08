@@ -62,7 +62,7 @@ import { incorrectName, incorrectLastName, incorrectEmail, incorrectPassword, in
       test('Wrong data - "Last Name is invalid"', async ({ page }) => {
         await signUpForm.open();
         await signUpForm.registerFailLastNameWithCredentials(incorrectLastName)
-        await expect(signUpForm.errorMessageBox).toHaveText('Name is invalid');
+        await expect(signUpForm.errorMessageBox).toHaveText('Last name is invalid');
 
       });
 
@@ -173,8 +173,38 @@ test('Border color red - validation Re-password', async ({ page }) => {
     await expect(signUpForm.errorMessageBox).toHaveText('Re-enter password required');
     await signUpForm.checkInputBorderColorById('signupRepeatPassword', 'rgb(220, 53, 69)');
 
+});
 
+});
+
+test.describe('Button is disabled - POM', () => {
+    let signUpForm: SignUpForm;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/');
+      signUpForm = new SignUpForm(page);
+  })
+  test('The registration button is disabled - incorrect data', async ({ page }) => {
+    await signUpForm.open();
+    await signUpForm.registerFailNameWithCredentials(incorrectName)
+    //await expect(signUpForm.errorMessageBox).toHaveText('Name is invalid');
+    const isDisabledAfterName = await signUpForm.isRegisterButtonDisabled();
+    expect(isDisabledAfterName).toBe(true);
+    await signUpForm.registerFailLastNameWithCredentials(incorrectLastName)
+    // await expect(signUpForm.errorMessageBox).toHaveText('Last name is invalid');
+    const isDisabledAfterLastName = await signUpForm.isRegisterButtonDisabled();
+    expect(isDisabledAfterLastName).toBe(true);
+    await signUpForm.registerFaiEmailWithCredentials(incorrectEmail)
+    const isDisabledAfterEmail = await signUpForm.isRegisterButtonDisabled();
+    expect(isDisabledAfterEmail).toBe(true);
+    await signUpForm.registerFailPasswordWithCredentials();
+    const isDisabledAfterPassword = await signUpForm.isRegisterButtonDisabled();
+    expect(isDisabledAfterPassword).toBe(true);
+    await signUpForm.registerFailRePasswordWithCredentials();
+    const isDisabledAfterRePassword = await signUpForm.isRegisterButtonDisabled();
+    expect(isDisabledAfterRePassword).toBe(true);
 
 });
 
 });
+
