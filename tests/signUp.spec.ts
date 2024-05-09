@@ -243,6 +243,7 @@ test.describe('Button is disabled', () => {
     await page.getByText('Sign up').click();
 })
 
+
   test('The registration button is disabled without entering data', async ({ page }) => {
     const registerButton = await page.$('.btn.btn-primary');
     const isDisabled = await registerButton.isDisabled();

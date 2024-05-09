@@ -10,18 +10,11 @@ export class SignUpForm {
     readonly lastnameField: Locator;
     readonly passwordField: Locator;
     readonly repasswordField: Locator;
-    // readonly registerButton: Locator;
     readonly registerButtonDisable: Locator;
     readonly errorMessageBox: Locator;
     readonly errorMessageColor: Locator;
-
-    // readonly errorMessageName: Locator;
-    // readonly errorMessageNameLenght: Locator;
-    // readonly errorMessageLastName: Locator;
-    // readonly errorMessageEmail: Locator;
-    // readonly errorMessagePassword: Locator;
-    // readonly errorMessageRePassword: Locator;
     readonly formHeader: Locator;
+    readonly registerButton: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -30,7 +23,7 @@ export class SignUpForm {
         this.emailField = page.locator('#signupEmail');
         this.passwordField = page.locator('#signupPassword');
         this.repasswordField = page.locator('#signupRepeatPassword');
-        // this.registerButton = page.locator('button', { hasText: 'Register' });
+        this.registerButton = page.locator('button', { hasText: 'Register' });
         this.errorMessageBox = page.locator('.invalid-feedback');
         this.errorMessageColor = page.locator('.invalid-feedback');
         this.registerButtonDisable = page.getByRole('button', { name: 'Register'});
@@ -41,8 +34,6 @@ export class SignUpForm {
         const signUpButton = new SignUpButton(this.page); 
         await signUpButton.clickSignUpButton();
         await expect(this.formHeader).toBeVisible();
-
-
     }
 
     async registerFailNameEmptyWithCredentials() {
@@ -127,6 +118,25 @@ export class SignUpForm {
     async isRegisterButtonDisabled(): Promise<boolean> {
         const registerButtonDisable = await this.registerButtonDisable;
         return await registerButtonDisable.isDisabled();
+    }
+
+    async registerUserWithCredentials(correctName: string, correctLastName: string, correctEmail: string, correctPassword: string, correctRePassword: string) {
+        await this.nameField.focus();
+        await this.nameField.fill(correctName);
+        await this.nameField.blur();
+        await this.lastnameField.focus();
+        await this.lastnameField.fill(correctLastName);
+        await this.lastnameField.blur();
+        await this.emailField.focus();
+        await this.emailField.fill(correctEmail);
+        await this.emailField.blur();
+        await this.passwordField.focus();
+        await this.passwordField.fill(correctPassword);
+        await this.passwordField.blur();
+        await this.repasswordField.focus();
+        await this.repasswordField.fill(correctRePassword);
+        await this.repasswordField.blur();
+        await this.registerButton.click();
     }
 
 
