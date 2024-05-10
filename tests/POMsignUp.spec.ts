@@ -224,7 +224,7 @@ test.describe('User registration verification - POM', () => {
         await signUpForm.open();
         await signUpForm.registerUserWithCredentials(correctName, correctLastName, correctEmail, correctPassword, correctRePassword
         );
-        await page.waitForNavigation({ timeout: 2000 })
+        await page.waitForURL('https://qauto.forstudy.space/panel/garage', { timeout: 2000 });
         expect(page.url()).toBe('https://qauto.forstudy.space/panel/garage');
         await expect(page.getByRole('heading', { name: 'Garage' })).toBeVisible();
 
