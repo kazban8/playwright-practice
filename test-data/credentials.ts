@@ -12,3 +12,5 @@ export const correctPassword = 'Dante123';
 export const correctRePassword = 'Dante123';
 export const incorrectPassword = 'P';
 export const incorrectRePassword = 'w';
+export const correctEmail1 = 'kazban8@gmail.com';
+export const correctPassword1 = 'Dante123'

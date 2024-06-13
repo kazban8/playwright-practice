@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { SignUpButton } from '../components/signUpButton';
-import { incorrectLenght, incorrectName, incorrectPassword, incorrectRePassword } from '../test-data/credentials';
+import { incorrectLenght, incorrectName, incorrectPassword, incorrectRePassword } from '../../test-data/credentials';
 
 
 export class SignUpForm {
